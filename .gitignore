@@ -1,0 +1,38 @@
+# Xcode User Settings
+xcuserdata/
+*.xcuserdatad/
+*.xcworkspace/xcuserdata/
+
+# Xcode Build Folders
+DerivedData/
+build/
+
+# Swift Package Manager
+.build/
+.swiftpm/
+
+# Obj-C / Swift
+*.hmap
+
+# App Packaging
+*.ipa
+*.dSYM
+*.dSYM.zip
+
+# Signing / Provisioning
+*.p12
+*.cer
+*.mobileprovision
+
+# Playgrounds
+timeline.xctimeline
+playground.xcworkspace
+
+# Carthage
+Carthage/Build/
+
+# fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/**/*.png
+fastlane/test_output
