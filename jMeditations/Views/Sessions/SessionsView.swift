@@ -17,7 +17,8 @@ struct SessionsView: View {
     )
     private var sessions: [Session]
 
-    @State private var showingAddSession: Bool = false
+    @State private var showingSessionForm: Bool = false
+    @State private var sessionToEdit: Session? = nil
 
     var body: some View {
         NavigationStack {
@@ -58,7 +59,7 @@ struct SessionsView: View {
                                     allowsFullSwipe: false
                                 ) {
                                     Button {
-                                        // TODO: Edit
+                                        sessionToEdit = session
                                     } label: {
                                         Label("Edit", systemImage: "pencil")
                                     }
@@ -74,12 +75,18 @@ struct SessionsView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        // TODO: Show add session sheet.
+                        showingSessionForm = true
                     } label: {
                         Image(systemName: "plus")
                     }
                 }
             }
+        }
+        .sheet(isPresented: $showingSessionForm) {
+            SessionFormView(session: nil)
+        }
+        .sheet(item: $sessionToEdit) { session in
+            SessionFormView(session: session)
         }
     }
 
