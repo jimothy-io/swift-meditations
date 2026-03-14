@@ -5,14 +5,129 @@
 //  Created by j on 14/03/2026.
 //
 
+import SwiftData
 import SwiftUI
 
 struct SessionsView: View {
+    @Query(
+        sort: \Session.date,
+        order: .reverse
+    )
+    private var sessions: [Session]
+
     var body: some View {
-        Text("Sessions")
+        NavigationStack {
+            Group {
+                if sessions.isEmpty {
+                    ContentUnavailableView(
+                        "No Sessions",
+                        systemImage: "timer",
+                        description: Text(
+                            "Your logged meditation sessions will appear here."
+                        )
+                    )
+                } else {
+                    List {
+                        ForEach(sessions) { session in
+                            SessionRowView(session: session)
+                                .contentShape(Rectangle())
+                                .listRowInsets(
+                                    EdgeInsets(
+                                        top: 12,
+                                        leading: 16,
+                                        bottom: 12,
+                                        trailing: 16
+                                    )
+                                )
+                                .swipeActions(
+                                    edge: .trailing,
+                                    allowsFullSwipe: false
+                                ) {
+                                    Button(role: .destructive) {
+                                        // TODO: Delete
+                                    } label: {
+                                        Label("Delete", systemImage: "trash")
+                                    }
+                                }
+                                .swipeActions(
+                                    edge: .leading,
+                                    allowsFullSwipe: false
+                                ) {
+                                    Button {
+                                        // TODO: Edit
+                                    } label: {
+                                        Label("Edit", systemImage: "pencil")
+                                    }
+                                    .tint(.blue)
+                                }
+                        }
+                    }
+                    .listStyle(.plain)
+                }
+            }
+            .navigationTitle("Sessions")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        // TODO: Show add session sheet.
+                    } label: {
+                        Image(systemName: "plus")
+                    }
+                }
+            }
+        }
+    }
+}
+
+private struct SessionRowView: View {
+    let session: Session
+
+    private var dayText: String {
+        session.date.formatted(.dateTime.day())
+    }
+
+    private var monthText: String {
+        session.date.formatted(.dateTime.month(.abbreviated))
+    }
+
+    private var weekdayText: String {
+        session.date.formatted(.dateTime.weekday(.wide))
+    }
+
+    private var minutesText: String {
+        "\(session.minutes) minute\(session.minutes == 1 ? "" : "s")"
+    }
+
+    var body: some View {
+        HStack(spacing: 16) {
+            VStack(spacing: 2) {
+                Text(dayText)
+                    .font(.title3)
+                    .fontWeight(.semibold)
+
+                Text(monthText)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+            .frame(width: 44)
+
+            VStack(alignment: .leading, spacing: 4) {
+                Text(weekdayText)
+                    .font(.body)
+                    .fontWeight(.medium)
+
+                Text(minutesText)
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+            }
+
+            Spacer()
+        }
     }
 }
 
 #Preview {
     SessionsView()
+        .modelContainer(PreviewContainer.sessions)
 }
