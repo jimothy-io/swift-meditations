@@ -9,11 +9,15 @@ import SwiftData
 import SwiftUI
 
 struct SessionsView: View {
+    @Environment(\.modelContext) private var modelContext
+
     @Query(
         sort: \Session.date,
         order: .reverse
     )
     private var sessions: [Session]
+
+    @State private var showingAddSession: Bool = false
 
     var body: some View {
         NavigationStack {
@@ -44,7 +48,7 @@ struct SessionsView: View {
                                     allowsFullSwipe: false
                                 ) {
                                     Button(role: .destructive) {
-                                        // TODO: Delete
+                                        deleteSession(session)
                                     } label: {
                                         Label("Delete", systemImage: "trash")
                                     }
@@ -76,6 +80,12 @@ struct SessionsView: View {
                     }
                 }
             }
+        }
+    }
+
+    func deleteSession(_ session: Session) {
+        withAnimation {
+            modelContext.delete(session)
         }
     }
 }
