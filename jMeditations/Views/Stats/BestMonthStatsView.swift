@@ -75,3 +75,8 @@ struct BestMonthStatsView: View {
     BestMonthStatsView()
         .modelContainer(PreviewContainer.sessions)
 }
+
+#Preview("Empty") {
+    BestMonthStatsView()
+        .modelContainer(PreviewContainer.empty)
+}

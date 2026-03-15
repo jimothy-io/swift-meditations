@@ -65,3 +65,8 @@ struct BestYearStatsView: View {
     BestYearStatsView()
         .modelContainer(PreviewContainer.sessions)
 }
+
+#Preview("Empty") {
+    BestYearStatsView()
+        .modelContainer(PreviewContainer.empty)
+}
