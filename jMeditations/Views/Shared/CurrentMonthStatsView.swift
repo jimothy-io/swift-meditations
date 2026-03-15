@@ -66,3 +66,15 @@ struct CurrentMonthStatsView: View {
     }
     .modelContainer(PreviewContainer.sessions)
 }
+
+#Preview("Empty") {
+    VStack {
+        HStack {
+            CurrentYearStatsView()
+            CurrentMonthStatsView()
+        }
+
+        CurrentMonthStatsView()
+    }
+    .modelContainer(PreviewContainer.empty)
+}
