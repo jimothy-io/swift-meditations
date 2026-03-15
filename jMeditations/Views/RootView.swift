@@ -5,12 +5,21 @@
 //  Created by j on 14/03/2026.
 //
 
-import SwiftUI
 import SwiftData
+import SwiftUI
 
 struct RootView: View {
     var body: some View {
-        SessionsView()
+        TabView {
+            SessionsView()
+                .tabItem {
+                    Label("Sessions", systemImage: "list.bullet")
+                }
+            StatsView()
+                .tabItem {
+                    Label("Stats", systemImage: "chart.bar")
+                }
+        }
     }
 }
 
