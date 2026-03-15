@@ -13,7 +13,7 @@ struct RootView: View {
         TabView {
             SessionsView()
                 .tabItem {
-                    Label("Sessions", systemImage: "list.bullet")
+                    Label("Sessions", systemImage: "timer")
                 }
             StatsView()
                 .tabItem {

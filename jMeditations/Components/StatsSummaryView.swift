@@ -3,17 +3,20 @@ import SwiftUI
 struct StatsSummaryView: View {
     let title: String
     let stats: SessionStats
+    let showZeroStats: Bool
     let subtitle: String?
     let supertitle: String?
 
     init(
         title: String,
         stats: SessionStats,
+        showZeroStats: Bool = false,
         subtitle: String? = nil,
         supertitle: String? = nil
     ) {
         self.title = title
         self.stats = stats
+        self.showZeroStats = showZeroStats
         self.subtitle = subtitle
         self.supertitle = supertitle
     }
@@ -36,7 +39,7 @@ struct StatsSummaryView: View {
                     .foregroundStyle(.secondary)
             }
 
-            if stats.sessions > 0 {
+            if stats.sessions > 0 || showZeroStats {
                 VStack(alignment: .leading, spacing: 4) {
                     statText("Minutes", "\(stats.minutes)")
                     statText("Sessions", "\(stats.sessions)")

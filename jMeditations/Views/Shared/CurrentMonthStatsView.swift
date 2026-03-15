@@ -56,6 +56,7 @@ struct CurrentMonthStatsView: View {
             StatsSummaryView(
                 title: title,
                 stats: stats,
+                showZeroStats: true,
                 supertitle: showSupertitle ? "Current Month" : nil
             )
         }
