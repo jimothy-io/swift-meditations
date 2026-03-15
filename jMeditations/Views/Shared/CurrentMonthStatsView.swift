@@ -4,15 +4,21 @@
 //
 //  Created by j on 15/03/2026.
 //
-
 import SwiftData
 import SwiftUI
 
 struct CurrentMonthStatsView: View {
     @Query private var sessions: [Session]
     private let title: String
+    private let showSupertitle: Bool
 
-    init(calendar: Calendar = .current, now: Date = Date()) {
+    init(
+        showSupertitle: Bool = false,
+        calendar: Calendar = .current,
+        now: Date = Date()
+    ) {
+        self.showSupertitle = showSupertitle
+
         let components = calendar.dateComponents([.year, .month], from: now)
 
         let startOfMonth = calendar.date(
@@ -40,7 +46,7 @@ struct CurrentMonthStatsView: View {
 
     private var stats: SessionStats {
         SessionStats(
-            minutes: sessions.reduce(0) { $0 + $1.minutes },
+            minutes: sessions.reduce(0) { a, b in a + b.minutes },
             sessions: sessions.count
         )
     }
@@ -50,6 +56,7 @@ struct CurrentMonthStatsView: View {
             StatsSummaryView(
                 title: title,
                 stats: stats,
+                supertitle: showSupertitle ? "Current Month" : nil
             )
         }
     }
@@ -59,7 +66,7 @@ struct CurrentMonthStatsView: View {
     VStack {
         HStack {
             CurrentYearStatsView()
-            CurrentMonthStatsView()
+            CurrentMonthStatsView(showSupertitle: true)
         }
 
         CurrentMonthStatsView()
@@ -74,7 +81,7 @@ struct CurrentMonthStatsView: View {
             CurrentMonthStatsView()
         }
 
-        CurrentMonthStatsView()
+        CurrentMonthStatsView(showSupertitle: true)
     }
     .modelContainer(PreviewContainer.empty)
 }

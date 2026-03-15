@@ -5,12 +5,30 @@
 //  Created by j on 15/03/2026.
 //
 
-import SwiftUI
 import SwiftData
+import SwiftUI
 
 struct StatsView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationStack {
+            VStack {
+                TotalStatsView()
+
+                HStack {
+                    BestYearStatsView()
+                    BestMonthStatsView()
+                }
+
+                HStack {
+                    CurrentYearStatsView(showSupertitle: true)
+                    CurrentMonthStatsView(showSupertitle: true)
+                }
+
+                Spacer()
+            }
+            .navigationTitle("Stats")
+            .padding(.vertical)
+        }
     }
 }
 

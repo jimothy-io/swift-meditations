@@ -28,6 +28,7 @@ struct SessionsView: View {
                     CurrentYearStatsView()
                     CurrentMonthStatsView()
                 }
+                .padding(.bottom)
 
                 Group {
                     if sessions.isEmpty {
@@ -81,7 +82,6 @@ struct SessionsView: View {
                     }
                 }
                 .navigationTitle("Sessions")
-                .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
                         Button {
@@ -98,6 +98,7 @@ struct SessionsView: View {
             .sheet(item: $sessionToEdit) { session in
                 SessionFormView(session: session)
             }
+            .padding(.top)
         }
     }
 
