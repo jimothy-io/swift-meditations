@@ -12,7 +12,7 @@ struct StatsCardView<Content: View>: View {
 
     var body: some View {
         content
-            .frame(maxWidth: .infinity, alignment: .leading)
+            .frame(maxWidth: .infinity, alignment: .topLeading)
             .padding(16)
             .background(cardBackground)
             .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))

@@ -1,5 +1,5 @@
 //
-//  CurrentYearStatsView.swift
+//  CurrentMonthStatsView.swift
 //  jMeditations
 //
 //  Created by j on 15/03/2026.
@@ -8,24 +8,31 @@
 import SwiftData
 import SwiftUI
 
-struct CurrentYearStatsView: View {
+struct CurrentMonthStatsView: View {
     @Query private var sessions: [Session]
     private let title: String
 
     init(calendar: Calendar = .current, now: Date = Date()) {
-        let year = calendar.component(.year, from: now)
-        let startOfYear = calendar.date(
-            from: DateComponents(year: year, month: 1, day: 1)
-        )!
-        let startOfNextYear = calendar.date(
-            from: DateComponents(year: year + 1, month: 1, day: 1)
+        let components = calendar.dateComponents([.year, .month], from: now)
+
+        let startOfMonth = calendar.date(
+            from: DateComponents(
+                year: components.year,
+                month: components.month,
+                day: 1
+            )
         )!
 
-        self.title = String(year)
+        let startOfNextMonth = calendar.date(
+            byAdding: DateComponents(month: 1),
+            to: startOfMonth
+        )!
+
+        self.title = now.formatted(.dateTime.month(.wide))
 
         _sessions = Query(
             filter: #Predicate<Session> { session in
-                session.date >= startOfYear && session.date < startOfNextYear
+                session.date >= startOfMonth && session.date < startOfNextMonth
             },
             sort: [SortDescriptor(\Session.date)]
         )
@@ -42,20 +49,18 @@ struct CurrentYearStatsView: View {
         StatsCardView {
             StatsSummaryView(
                 title: title,
-                stats: stats
+                stats: stats,
             )
         }
     }
 }
 
 #Preview {
-    VStack(spacing: 12) {
-
-        HStack(alignment: .top, spacing: 12) {
+    VStack {
+        HStack {
             CurrentYearStatsView()
             CurrentMonthStatsView()
         }
-
 
         CurrentMonthStatsView()
     }
