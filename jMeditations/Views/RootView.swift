@@ -25,5 +25,10 @@ struct RootView: View {
 
 #Preview {
     RootView()
-        .modelContainer(PreviewContainer.app)
+        .modelContainer(PreviewContainer.sessions)
+}
+
+#Preview("Empty") {
+    RootView()
+        .modelContainer(PreviewContainer.empty)
 }

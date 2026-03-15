@@ -9,30 +9,22 @@ import Foundation
 import SwiftData
 
 enum PreviewContainer {
-    static var sessions: ModelContainer {
-        let container = try! ModelContainer(
-            for: Session.self,
-            configurations: ModelConfiguration(isStoredInMemoryOnly: true)
-        )
-
-        let context = container.mainContext
-        for item in Session.previews {
-            context.insert(item)
-        }
-
-        return container
+    static var empty: ModelContainer {
+        makeSessionContainer(with: [])
     }
 
-    static var app: ModelContainer {
+    static var sessions: ModelContainer {
+        makeSessionContainer(with: Session.previews)
+    }
+
+    private static func makeSessionContainer(with sessions: [Session]) -> ModelContainer {
         let container = try! ModelContainer(
             for: Session.self,
             configurations: ModelConfiguration(isStoredInMemoryOnly: true)
         )
 
         let context = container.mainContext
-        for item in Session.previews {
-            context.insert(item)
-        }
+        sessions.forEach { context.insert($0) }
 
         return container
     }

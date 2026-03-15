@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct StatsView: View {
     var body: some View {
@@ -15,4 +16,10 @@ struct StatsView: View {
 
 #Preview {
     StatsView()
+        .modelContainer(PreviewContainer.sessions)
+}
+
+#Preview("Empty") {
+    StatsView()
+        .modelContainer(PreviewContainer.sessions)
 }

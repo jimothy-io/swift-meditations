@@ -22,71 +22,82 @@ struct SessionsView: View {
 
     var body: some View {
         NavigationStack {
-            Group {
-                if sessions.isEmpty {
-                    ContentUnavailableView(
-                        "No Sessions",
-                        systemImage: "timer",
-                        description: Text(
-                            "Your logged meditation sessions will appear here."
+            VStack {
+
+                HStack {
+                    CurrentYearStatsView()
+                    CurrentMonthStatsView()
+                }
+
+                Group {
+                    if sessions.isEmpty {
+                        ContentUnavailableView(
+                            "No Sessions",
+                            systemImage: "timer",
+                            description: Text(
+                                "Your logged meditation sessions will appear here."
+                            )
                         )
-                    )
-                } else {
-                    List {
-                        ForEach(sessions) { session in
-                            SessionRowView(session: session)
-                                .contentShape(Rectangle())
-                                .listRowInsets(
-                                    EdgeInsets(
-                                        top: 12,
-                                        leading: 16,
-                                        bottom: 12,
-                                        trailing: 16
+                    } else {
+                        List {
+                            ForEach(sessions) { session in
+                                SessionRowView(session: session)
+                                    .contentShape(Rectangle())
+                                    .listRowInsets(
+                                        EdgeInsets(
+                                            top: 12,
+                                            leading: 16,
+                                            bottom: 12,
+                                            trailing: 16
+                                        )
                                     )
-                                )
-                                .swipeActions(
-                                    edge: .trailing,
-                                    allowsFullSwipe: false
-                                ) {
-                                    Button(role: .destructive) {
-                                        deleteSession(session)
-                                    } label: {
-                                        Label("Delete", systemImage: "trash")
+                                    .swipeActions(
+                                        edge: .trailing,
+                                        allowsFullSwipe: false
+                                    ) {
+                                        Button(role: .destructive) {
+                                            deleteSession(session)
+                                        } label: {
+                                            Label(
+                                                "Delete",
+                                                systemImage: "trash"
+                                            )
+                                        }
                                     }
-                                }
-                                .swipeActions(
-                                    edge: .leading,
-                                    allowsFullSwipe: false
-                                ) {
-                                    Button {
-                                        sessionToEdit = session
-                                    } label: {
-                                        Label("Edit", systemImage: "pencil")
+                                    .swipeActions(
+                                        edge: .leading,
+                                        allowsFullSwipe: false
+                                    ) {
+                                        Button {
+                                            sessionToEdit = session
+                                        } label: {
+                                            Label("Edit", systemImage: "pencil")
+                                        }
+                                        .tint(.blue)
                                     }
-                                    .tint(.blue)
-                                }
+                            }
+                        }
+                        .listStyle(.plain)
+                    }
+                }
+                .navigationTitle("Sessions")
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button {
+                            showingSessionForm = true
+                        } label: {
+                            Image(systemName: "plus")
                         }
                     }
-                    .listStyle(.plain)
                 }
             }
-            .navigationTitle("Sessions")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        showingSessionForm = true
-                    } label: {
-                        Image(systemName: "plus")
-                    }
-                }
+            .sheet(isPresented: $showingSessionForm) {
+                SessionFormView(session: nil)
             }
-        }
-        .sheet(isPresented: $showingSessionForm) {
-            SessionFormView(session: nil)
-        }
-        .sheet(item: $sessionToEdit) { session in
-            SessionFormView(session: session)
+            .sheet(item: $sessionToEdit) { session in
+                SessionFormView(session: session)
+            }
         }
     }
 
@@ -147,4 +158,9 @@ private struct SessionRowView: View {
 #Preview {
     SessionsView()
         .modelContainer(PreviewContainer.sessions)
+}
+
+#Preview("Empty") {
+    SessionsView()
+        .modelContainer(PreviewContainer.empty)
 }

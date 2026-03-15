@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct StatsCardView<Content: View>: View {
     @ViewBuilder let content: Content
@@ -29,4 +30,9 @@ struct StatsCardView<Content: View>: View {
         RoundedRectangle(cornerRadius: 20, style: .continuous)
             .stroke(Color.primary.opacity(0.06), lineWidth: 1)
     }
+}
+
+#Preview {
+    SessionsView()
+        .modelContainer(PreviewContainer.sessions)
 }
