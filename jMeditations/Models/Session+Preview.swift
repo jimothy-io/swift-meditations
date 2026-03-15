@@ -70,13 +70,13 @@ extension Session {
             Session(minutes: 30, date: date(2025, 12, 11)),
 
             // 2026
-            Session(minutes: 12, date: date(2024, 1, 5)),
-            Session(minutes: 15, date: date(2024, 1, 6)),
-            Session(minutes: 18, date: date(2024, 2, 2)),
-            Session(minutes: 14, date: date(2024, 2, 17)),
-            Session(minutes: 10, date: date(2024, 2, 23)),
-            Session(minutes: 20, date: date(2024, 3, 1)),
-            Session(minutes: 8, date: date(2024, 3, 10)),
+            Session(minutes: 12, date: date(2026, 1, 5)),
+            Session(minutes: 15, date: date(2026, 1, 6)),
+            Session(minutes: 18, date: date(2026, 2, 2)),
+            Session(minutes: 14, date: date(2026, 2, 17)),
+            Session(minutes: 10, date: date(2026, 2, 23)),
+            Session(minutes: 20, date: date(2026, 3, 1)),
+            Session(minutes: 8, date: date(2026, 3, 10)),
         ]
     }
 
