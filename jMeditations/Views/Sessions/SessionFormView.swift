@@ -39,6 +39,7 @@ struct SessionFormView: View {
                     DatePicker(
                         "Date",
                         selection: $date,
+                        in: ...Date.now,
                         displayedComponents: .date
                     )
                 }
